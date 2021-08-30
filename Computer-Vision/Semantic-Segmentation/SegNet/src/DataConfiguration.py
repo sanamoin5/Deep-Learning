@@ -33,7 +33,8 @@ class DataConfiguration:
     def create_image_transform(self):
         self.image_transform = transforms.Compose(
             [
-                transforms.Resize((224, 224)),
+                transforms.Resize((1024, 1024)),
+                transforms.CenterCrop(10),
                 transforms.RandomHorizontalFlip(0.5),
                 transforms.RandomVerticalFlip(0.5),
                 transforms.ToTensor(),
@@ -42,7 +43,8 @@ class DataConfiguration:
         self.mask_transform = transforms.Compose(
             [
                 #  transforms.ToPILImage(),
-                transforms.Resize((224, 224)),
+                transforms.Resize((1024, 1024)),
+                transforms.CenterCrop(10),
                 transforms.RandomHorizontalFlip(0.5),
                 transforms.RandomVerticalFlip(0.5),
             ]
