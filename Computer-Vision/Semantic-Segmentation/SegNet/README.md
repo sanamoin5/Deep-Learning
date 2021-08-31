@@ -65,4 +65,4 @@ Run **Execution.py** in order to train the model and subsequently test the train
 #### Subsequent Epochs
 ![img_2.png](resources/Sebsequent_Epochs.png)
 #### Trained Model
-![img.png](resources/Final_Prediction.png)
+![img.png](resources/Final_Predictions.png)
