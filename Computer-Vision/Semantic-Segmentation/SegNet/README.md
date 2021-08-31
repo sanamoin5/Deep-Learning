@@ -34,10 +34,11 @@ Classification Dataset.
 1. Download the dataset from [Land Classification Dataset](http://deepglobe.org/challenge.html).
 2. Change the path of the directories in following files:<br>
    a. DataConfiguration.py <br>
-   b. Test.py
-3. Make sure to have ample disk space available for saving the model checkpoints and best model.
-4. As SegNet is based on VGG (13 Layer Network), thus for less tuning and quick execution, pretrained VGG-13 network can be also used. In order to do that, uncomment 
-   VGG13 pretrained import and comment VGG13 import in the following files:
+   b. Test.py <br>
+3. Make sure to have ample disk space available for saving the model checkpoints and best model. <br>
+4. As SegNet is based on VGG (13 Layer Network), thus for less tuning and quick execution, pretrained VGG-13 network can
+   be also used. In order to do that, uncomment the import statement of pretrained VGG13 and comment that of VGG13
+   in the following files: <br>
    a. Train.py
 > **NOTE:** More Information on how to work with pretrained networks can be fetched from:  
 > 1. [PyTorch Models](https://pytorch.org/vision/stable/models.html)
