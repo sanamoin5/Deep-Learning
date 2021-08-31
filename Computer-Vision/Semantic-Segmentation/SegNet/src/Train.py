@@ -43,7 +43,7 @@ class Train():
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = torch.optim.SGD(self.model.parameters(), lr=self.learning_rate, momentum=0.9,
                                          weight_decay=0.0005)
-        self.scheduler = opti.lr_scheduler.StepLR(self.optimizer, step_size=5, gamma=0.1)
+        self.scheduler = opti.lr_scheduler.StepLR(self.optimizer, step_size=1, gamma=0.9)
 
         self.device = ('cuda' if torch.cuda.is_available() else 'cpu')
         self.model.to(torch.device(self.device))
