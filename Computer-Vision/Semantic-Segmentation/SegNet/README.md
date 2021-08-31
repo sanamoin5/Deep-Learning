@@ -47,6 +47,8 @@ Classification Dataset.
 > 4. [Transfer Learning](https://debuggercafe.com/transfer-learning-with-pytorch/)
 5. Another important step to keep in mind is that this code is for Multi-Class Classification. Therefore, adapt your 
    code according to the number of classes to be predicted along with the number of features required per layer.
+6. Finally, change the Regularisation (Weight Decay), and Learning Rate Schedule (decay), according to the objective of 
+   the network.
 > **NOTE:** This code is not specific to [Land Classification Dataset](http://deepglobe.org/challenge.html). It can be 
   used with any dataset as required. However, few parts present in the code (For example: One-Hot Encoding, 
   Semantic Masks, Visualization might have to be changed according to the data this model is being applied for.)
