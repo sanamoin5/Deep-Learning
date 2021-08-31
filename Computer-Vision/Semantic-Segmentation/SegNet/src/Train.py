@@ -9,7 +9,8 @@ import torch.optim as opti
 import matplotlib.pyplot as plt
 from torchvision import transforms, datasets
 from DataConfiguration import DataConfiguration
-from SegNet_VGG16 import SegNet
+from SegNet_VGG13 import SegNet
+# from SegNet_VGG13_Pretrained import SegNet
 
 
 """ Entire Training and Validation of the Network is done through this class. """
@@ -38,6 +39,7 @@ class Train():
         calculates the loss. Along with this, optimizer is created using momentum, regularization and scheduling the 
         learning rate"""
         self.model = SegNet(self.number_of_classes)
+        # self.model = SegNet(self.number_of_classes).get_model()
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = torch.optim.SGD(self.model.parameters(), lr=self.learning_rate, momentum=0.9,
                                          weight_decay=0.0005)
