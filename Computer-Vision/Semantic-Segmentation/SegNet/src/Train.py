@@ -176,13 +176,43 @@ class Train():
         accuracy /= len(predictions)
         return accuracy
 
+    """ Similar to IoU and accuracy, this method helps find out the mean Class Pixel F1 score along with precision and 
+        recall for a particular batch and help analyse the model's performance """
+    def get_f1_score(self, ground_truths, predictions):
+        precision_arr = []
+        recall_arr = []
+        f1_arr = []
+        for i in range(len(predictions)):
+            c, w, h = predictions[i].size()
+            prediction = predictions[i]
+            truth = ground_truths[i]
+            output = torch.argmax(prediction, dim=0)
+
+            tp = (truth * output).sum()
+            tn = ((1 - truth) * (1 - output)).sum()
+            fp = ((1 - truth) * output).sum()
+            fn = (truth * (1 - output)).sum()
+
+            precision = tp / (tp + fp)
+            recall = tp / (tp + fn)
+
+            f1_score = 2 * (precision * recall) / (precision + recall + epsilon)
+
+            precision_arr.append(precision)
+            recall_arr.append(recall)
+            f1_arr.append(f1_score)
+
+        return np.average(precision_arr), np.average(recall_arr), np.average(f1_arr)
+
+
     """ This is a common method used to fetch all the result metrics """
     def get_accuracies(self, ground_truths, predictions):
 
         iou = self.get_iou(ground_truths, predictions)
         accuracy = self.get_accuracy(ground_truths, predictions)
+        precision, recall, f1_score = self.get_f1_score(ground_truths, predictions)
 
-        return iou, accuracy
+        return iou, accuracy, precision, recall, f1_score
 
     """ This model helps save the checkpoints, overall network as well as the model with the best performance so far """
     def save_checkpoint(self, model, optimizer, check_point_index):
@@ -231,9 +261,12 @@ class Train():
                 total_epoch_loss_training += loss.item()
                 running_loss_training += loss.item() * images.size(0)
                 running_corrects_training += torch.sum(preds == masked_images)
-                iou, accuracy = self.get_accuracies(masked_images, output_images)
+                iou, accuracy, precision, recall, f1_score = self.get_accuracies(masked_images, output_images)
                 print(
-                   f'Epoch: {epoch}, Batch: {batch_idx}, Batch Loss: {loss.item() / self.batch_size}, Epoch Loss: {running_loss_training}, Batch Corrects: {running_corrects_training}, Batch Accuracy: {accuracy}')
+                   f'Epoch: {epoch}, Batch: {batch_idx}, Batch Loss: {loss.item() / self.batch_size}, '
+                   f'Epoch Loss: {running_loss_training}, Batch Corrects: {running_corrects_training}, '
+                   f'Batch Accuracy: {accuracy}, Batch Precision: {precision}, Batch Recall: {recall}, '
+                   f'Batch F1 Score: {f1_score}')
 
                 loss.backward()
                 self.optimizer.step()
